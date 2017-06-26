@@ -1,7 +1,7 @@
-﻿using ReduxWPF.States;
-using ReduxWPF.ViewModels;
+﻿using ReduxWPF.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+using static FSharpRedux;
 
 namespace ReduxWPF
 {
@@ -9,15 +9,12 @@ namespace ReduxWPF
     {
         public static IEnumerable<Todo> GetFilteredTodos(AppState state)
         {
-            switch (state.Filter)
-            {
-                case TodosFilter.InProgress:
-                    return state.Todos.Where(x => !x.IsCompleted);
-                case TodosFilter.Completed:
-                    return state.Todos.Where(x => x.IsCompleted);
-                default:
-                    return state.Todos;
-            }
+            if (state.Filter == TodoFilter.WIP)
+                return state.Todos.Where(x => x.Status == Status.WIP);
+            if (state.Filter == TodoFilter.DONE)
+                return state.Todos.Where(x => x.Status == Status.DONE);
+
+            return state.Todos;
         }
 
         public static FooterViewModel MakeFooterViewModel(AppState state)
@@ -32,7 +29,7 @@ namespace ReduxWPF
 
         public static string GetActiveTodosCounterMessage(IEnumerable<Todo> todos)
         {
-            var activeTodoCount = todos.Count(todo => !todo.IsCompleted);
+            var activeTodoCount = todos.Count(todo => todo.Status != Status.DONE);
             var itemWord = activeTodoCount <= 1 ? "item" : "items";
             return activeTodoCount + " " + itemWord + " left";
         }

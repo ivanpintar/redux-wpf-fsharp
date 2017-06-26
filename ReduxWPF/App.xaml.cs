@@ -1,12 +1,7 @@
-﻿using Redux;
-using ReduxWPF.Actions;
-using ReduxWPF.Data;
-using ReduxWPF.States;
-using System.Collections.Immutable;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using Microsoft.FSharp.Collections;
+using Redux;
 using System.Windows;
-using Taiste.Redux;
+using static FSharpRedux;
 
 namespace ReduxWPF
 {
@@ -16,19 +11,14 @@ namespace ReduxWPF
     public partial class App : Application
     {
         public static IStore<AppState> Store { get; private set; }
-        public static ActionCreator Actions = new ActionCreator(new TodoRepository());
 
         public App()
         {
             InitializeComponent();
 
-            var initialState = new AppState
-            {
-                Todos = ImmutableArray<Todo>.Empty,
-                Filter = TodosFilter.All
-            };
+            var initialState = new AppState(FSharpList<Todo>.Empty, TodoFilter.ALL);
 
-            Store = new Store<AppState>(Reducers.ReduceApplication, initialState, Middleware.ThunkMiddleware);
+            Store = new Store<AppState>(reduce, initialState);
         }
     }
 }

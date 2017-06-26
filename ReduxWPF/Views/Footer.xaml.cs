@@ -1,10 +1,9 @@
-﻿using ReduxWPF.Actions;
-using ReduxWPF.States;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using static FSharpRedux;
 
 namespace ReduxWPF.Views
 {
@@ -27,40 +26,34 @@ namespace ReduxWPF.Views
 
         }
 
-        private void CheckFilter(TodosFilter selectedFilter)
+        private void CheckFilter(TodoFilter selectedFilter)
         {
-            switch (selectedFilter)
-            {
-                case TodosFilter.InProgress:
-                    InProgressFilter.IsChecked = true;
-                    break;
-                case TodosFilter.Completed:
-                    CompletedFilter.IsChecked = true;
-                    break;
-                default:
-                    AllFilter.IsChecked = true;
-                    break;
-            }
+            if (selectedFilter == TodoFilter.DONE)
+                CompletedFilter.IsChecked = true;
+            else if (selectedFilter == TodoFilter.WIP)
+                InProgressFilter.IsChecked = true;
+            else
+                AllFilter.IsChecked = true;
         }
 
         private void AllFilter_Click(object sender, RoutedEventArgs e)
         {
-            FilterTodos(TodosFilter.All);
+            FilterTodos(TodoFilter.ALL);
         }
 
         private void InProgressFilter_Click(object sender, RoutedEventArgs e)
         {
-            FilterTodos(TodosFilter.InProgress);
+            FilterTodos(TodoFilter.WIP);
         }
 
         private void CompletedFilter_Click(object sender, RoutedEventArgs e)
         {
-            FilterTodos(TodosFilter.Completed);
+            FilterTodos(TodoFilter.DONE);
         }
 
-        private void FilterTodos(TodosFilter filter)
+        private void FilterTodos(TodoFilter filter)
         {
-            App.Store.Dispatch(App.Actions.Filter(filter));
+            App.Store.Dispatch(FSharpRedux.Action.NewFilterTodos(filter));
         }
 
     }

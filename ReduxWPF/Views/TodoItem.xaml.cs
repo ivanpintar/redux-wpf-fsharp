@@ -1,7 +1,6 @@
-﻿using ReduxWPF.States;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using ReduxWPF.Actions;
+using static FSharpRedux;
 
 namespace ReduxWPF.Views
 {
@@ -25,8 +24,8 @@ namespace ReduxWPF.Views
             var todo = (Todo)args.NewValue;
 
             todoItem.TodoItemTextBlock.Text = todo.Text;
-            todoItem.CompleteCheckBox.IsChecked = todo.IsCompleted;
-            todoItem.DeleteTodoItemButton.Visibility = !todo.IsCompleted ? Visibility.Hidden : Visibility.Visible;            
+            todoItem.CompleteCheckBox.IsChecked = todo.Status == Status.DONE;
+            todoItem.DeleteTodoItemButton.Visibility = todo.Status != Status.DONE ? Visibility.Hidden : Visibility.Visible;
         }
 
         public TodoItem()
@@ -36,12 +35,12 @@ namespace ReduxWPF.Views
 
         private void CompleteCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            App.Store.Dispatch(App.Actions.ToggleTodo(Todo.Id));
+            App.Store.Dispatch(Action.NewToggleTodo(Todo.Id, Status.DONE));
         }
 
         private void DeleteTodoItemButton_Click(object sender, RoutedEventArgs e)
         {
-            App.Store.Dispatch(App.Actions.DeleteTodo(Todo.Id));
+            App.Store.Dispatch(Action.NewDeleteTodo(Todo.Id));
         }
     }
 }
