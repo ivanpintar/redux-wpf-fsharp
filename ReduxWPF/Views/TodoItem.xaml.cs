@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using static FSharpRedux;
+using FSharpRedux;
 
 namespace ReduxWPF.Views
 {
@@ -35,12 +35,12 @@ namespace ReduxWPF.Views
 
         private void CompleteCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            App.Store.Dispatch(Action.NewToggleTodo(Todo.Id, Status.DONE));
+            App.Store.Dispatch(Actions.toggleTodo(Todo.Id, Status.DONE));
         }
 
         private void DeleteTodoItemButton_Click(object sender, RoutedEventArgs e)
         {
-            App.Store.Dispatch(Action.NewDeleteTodo(Todo.Id));
+            App.Store.Dispatch(Actions.deleteTodo(Todo.Id));
         }
     }
 }

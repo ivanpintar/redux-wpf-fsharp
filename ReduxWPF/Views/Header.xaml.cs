@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
-using static FSharpRedux;
+using FSharpRedux;
 
 namespace ReduxWPF.Views
 {
@@ -19,7 +19,7 @@ namespace ReduxWPF.Views
             if (e.Key != Key.Enter)
                 return;
 
-            App.Store.Dispatch(Action.NewAddTodo(TodoInputTextBox.Text));
+            App.Store.Dispatch(Actions.addTodo(TodoInputTextBox.Text));
             TodoInputTextBox.Text = string.Empty;
         }
     }

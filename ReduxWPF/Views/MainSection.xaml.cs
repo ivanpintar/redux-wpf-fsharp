@@ -16,7 +16,7 @@ namespace ReduxWPF.Views
 
             App.Store
                 .Select(Selectors.GetFilteredTodos)
-                .Subscribe(todos => TodosItemsControl.ItemsSource = todos);
+                .Subscribe(todos => this.Dispatcher.Invoke(() => TodosItemsControl.ItemsSource = todos));
         }
     }
 }

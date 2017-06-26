@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using static FSharpRedux;
+using FSharpRedux;
 
 namespace ReduxWPF.Views
 {
@@ -20,8 +20,11 @@ namespace ReduxWPF.Views
                 .Select(Selectors.MakeFooterViewModel)
                 .Subscribe(vm =>
                 {
-                    ActiveTodoCounterTextBlock.Text = vm.ActiveTodosCounterMessage;
-                    CheckFilter(vm.SelectedFilter);
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        ActiveTodoCounterTextBlock.Text = vm.ActiveTodosCounterMessage;
+                        CheckFilter(vm.SelectedFilter);
+                    });
                 });
 
         }
@@ -53,7 +56,7 @@ namespace ReduxWPF.Views
 
         private void FilterTodos(TodoFilter filter)
         {
-            App.Store.Dispatch(FSharpRedux.Action.NewFilterTodos(filter));
+            App.Store.Dispatch(Actions.setFilter(filter));
         }
 
     }

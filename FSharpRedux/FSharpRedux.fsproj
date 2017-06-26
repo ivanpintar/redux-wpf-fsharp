@@ -54,6 +54,8 @@
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="Types.fs" />
+    <Compile Include="DataAccess.fs" />
     <Compile Include="FSharpRedux.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
@@ -87,6 +89,9 @@
     </Reference>
     <Reference Include="System.ValueTuple">
       <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="thunk.NET">
+      <HintPath>..\packages\redux.NET-thunk.0.1.0\lib\portable-net45+netcore45\thunk.NET.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>

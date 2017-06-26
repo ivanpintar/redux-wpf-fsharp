@@ -13,10 +13,10 @@ namespace ReduxWPF
         {
             InitializeComponent();
 
-            App.Store.Subscribe(state =>
+            App.Store.Subscribe(state => this.Dispatcher.Invoke(() =>
             {
                 Footer.Visibility = state.Todos.Any() ? Visibility.Visible : Visibility.Collapsed;
-            });
+            }));
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using ReduxWPF.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
-using static FSharpRedux;
+using FSharpRedux;
 
 namespace ReduxWPF
 {
@@ -30,7 +30,7 @@ namespace ReduxWPF
         public static string GetActiveTodosCounterMessage(IEnumerable<Todo> todos)
         {
             var activeTodoCount = todos.Count(todo => todo.Status != Status.DONE);
-            var itemWord = activeTodoCount <= 1 ? "item" : "items";
+            var itemWord = activeTodoCount == 1 ? "item" : "items";
             return activeTodoCount + " " + itemWord + " left";
         }
     }

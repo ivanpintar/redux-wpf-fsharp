@@ -1,4 +1,4 @@
-﻿using static FSharpRedux;
+﻿using FSharpRedux;
 
 namespace ReduxWPF.ViewModels
 {

@@ -1,7 +1,8 @@
 ﻿using Microsoft.FSharp.Collections;
 using Redux;
 using System.Windows;
-using static FSharpRedux;
+using FSharpRedux;
+using Taiste.Redux;
 
 namespace ReduxWPF
 {
@@ -18,7 +19,7 @@ namespace ReduxWPF
 
             var initialState = new AppState(FSharpList<Todo>.Empty, TodoFilter.ALL);
 
-            Store = new Store<AppState>(reduce, initialState);
+            Store = new Store<AppState>(Reducers.reduce, initialState, Middleware.ThunkMiddleware);
         }
     }
 }
